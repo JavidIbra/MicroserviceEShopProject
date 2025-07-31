@@ -1,13 +1,18 @@
-using Microsoft.Extensions.Options;
+using MicroserviceEShopProject.BuildingBlocks.Behaviors;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddCarter();
 
+var assembly = typeof(Program).Assembly;
+
 builder.Services.AddMediatR(conf =>
 {
-    conf.RegisterServicesFromAssembly(typeof(Program).Assembly);
+    conf.RegisterServicesFromAssembly(assembly);
+    conf.AddOpenBehavior(typeof(ValidationBehavior<,>));
 });
+
+builder.Services.AddValidatorsFromAssembly(assembly);
 
 builder.Services.AddMarten(opt =>
 {
