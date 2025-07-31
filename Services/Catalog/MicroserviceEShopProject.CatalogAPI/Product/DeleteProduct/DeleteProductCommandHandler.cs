@@ -11,13 +11,11 @@
         }
     }
 
-    internal sealed class DeleteProductCommandHandler(IDocumentSession documentSession, ILogger<DeleteProductCommandHandler> logger)
+    internal sealed class DeleteProductCommandHandler(IDocumentSession documentSession)
         : ICommandHandler<DeleteProductCommand, DeleteProductResult>
     {
         public async Task<DeleteProductResult> Handle(DeleteProductCommand command, CancellationToken cancellationToken)
         {
-            logger.LogInformation("handler called by {@Command} ", command);
-
             documentSession.Delete<Models.Product>(command.Id);
 
             await documentSession.SaveChangesAsync(cancellationToken);

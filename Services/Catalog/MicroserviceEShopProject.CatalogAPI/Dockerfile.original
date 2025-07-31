@@ -13,7 +13,6 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["Services/Catalog/MicroserviceEShopProject.CatalogAPI/MicroserviceEShopProject.CatalogAPI.csproj", "Services/Catalog/MicroserviceEShopProject.CatalogAPI/"]
-COPY ["BuildingBlocks/MicroserviceEShopProject.BuildingBlocks/MicroserviceEShopProject.BuildingBlocks.csproj", "BuildingBlocks/MicroserviceEShopProject.BuildingBlocks/"]
 RUN dotnet restore "./Services/Catalog/MicroserviceEShopProject.CatalogAPI/MicroserviceEShopProject.CatalogAPI.csproj"
 COPY . .
 WORKDIR "/src/Services/Catalog/MicroserviceEShopProject.CatalogAPI"

@@ -1,6 +1,7 @@
 ﻿
 namespace MicroserviceEShopProject.CatalogAPI.Product.GetProducts
 {
+    public record GetProductRequest(int? PageNumber = 1, int? PageSize = 10);
 
     public record GetProductResponse(IEnumerable<Models.Product> Products);
 
@@ -8,9 +9,11 @@ namespace MicroserviceEShopProject.CatalogAPI.Product.GetProducts
     {
         public void AddRoutes(IEndpointRouteBuilder app)
         {
-            app.MapGet("/products", async (ISender sender) =>
+            app.MapGet("/products", async ([AsParameters] GetProductRequest request, ISender sender) =>
             {
-                var result = await sender.Send(new GetProductsQuery());
+                var query = request.Adapt<GetProductsQuery>();
+
+                var result = await sender.Send(query);
 
                 var response = result.Adapt<GetProductResponse>();
 

@@ -12,20 +12,19 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["Services/Catalog/MicroserviceEShopProject.CatalogAPI/MicroserviceEShopProject.CatalogAPI.csproj", "Services/Catalog/MicroserviceEShopProject.CatalogAPI/"]
-COPY ["BuildingBlocks/MicroserviceEShopProject.BuildingBlocks/MicroserviceEShopProject.BuildingBlocks.csproj", "BuildingBlocks/MicroserviceEShopProject.BuildingBlocks/"]
-RUN dotnet restore "./Services/Catalog/MicroserviceEShopProject.CatalogAPI/MicroserviceEShopProject.CatalogAPI.csproj"
+COPY ["Services/Basket/MicroserviceEShopProject.BasketAPI/MicroserviceEShopProject.BasketAPI.csproj", "Services/Basket/MicroserviceEShopProject.BasketAPI/"]
+RUN dotnet restore "./Services/Basket/MicroserviceEShopProject.BasketAPI/MicroserviceEShopProject.BasketAPI.csproj"
 COPY . .
-WORKDIR "/src/Services/Catalog/MicroserviceEShopProject.CatalogAPI"
-RUN dotnet build "./MicroserviceEShopProject.CatalogAPI.csproj" -c $BUILD_CONFIGURATION -o /app/build
+WORKDIR "/src/Services/Basket/MicroserviceEShopProject.BasketAPI"
+RUN dotnet build "./MicroserviceEShopProject.BasketAPI.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # This stage is used to publish the service project to be copied to the final stage
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./MicroserviceEShopProject.CatalogAPI.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "./MicroserviceEShopProject.BasketAPI.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
 # This stage is used in production or when running from VS in regular mode (Default when not using the Debug configuration)
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "MicroserviceEShopProject.CatalogAPI.dll"]
+ENTRYPOINT ["dotnet", "MicroserviceEShopProject.BasketAPI.dll"]

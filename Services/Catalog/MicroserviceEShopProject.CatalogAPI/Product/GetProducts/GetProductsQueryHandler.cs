@@ -1,15 +1,14 @@
 ﻿namespace MicroserviceEShopProject.CatalogAPI.Product.GetProducts
 {
-    public record GetProductsQuery(): IQuery<GetProductsResult>;
+    public record GetProductsQuery(int? PageNumber = 1, int? PageSize = 10) : IQuery<GetProductsResult>;
     public record GetProductsResult(IEnumerable<Models.Product> Products);
-    internal sealed class GetProductsQueryHandler(IDocumentSession documentSession,ILogger<GetProductsQueryHandler> logger)
+    internal sealed class GetProductsQueryHandler(IDocumentSession documentSession)
         : IQueryHandler<GetProductsQuery, GetProductsResult>
     {
         public async Task<GetProductsResult> Handle(GetProductsQuery query, CancellationToken cancellationToken)
         {
-            logger.LogInformation("handler called {@Query}" , query);
-
-            var products =  await documentSession.Query<Models.Product>().ToListAsync(cancellationToken);
+            var products = await documentSession.Query<Models.Product>()
+                .ToPagedListAsync(query.PageNumber ?? 1, query.PageSize ?? 10, cancellationToken);
 
             return new GetProductsResult(products);
         }
