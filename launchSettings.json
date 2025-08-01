@@ -4,7 +4,8 @@
       "commandName": "DockerCompose",
       "commandVersion": "1.0",
       "serviceActions": {
-        "microserviceeshopproject.catalogapi": "StartDebugging"
+        "microserviceeshopproject.catalogapi": "StartDebugging",
+        "microserviceeshopproject.basketapi": "StartDebugging"
       }
     }
   }

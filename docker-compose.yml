@@ -2,12 +2,26 @@ services:
   catalogdb:
     image: postgres
 
+  basketdb:
+    image: postgres
+
+  distributedcache:
+    image: redis
+
   microserviceeshopproject.catalogapi:
     image: ${DOCKER_REGISTRY-}microserviceeshopprojectcatalogapi
     build:
       context: .
       dockerfile: Services/Catalog/MicroserviceEShopProject.CatalogAPI/Dockerfile
 
+  microserviceeshopproject.basketapi:
+    image: ${DOCKER_REGISTRY-}microserviceeshopprojectbasketapi
+    build:
+      context: .
+      dockerfile: Services/Basket/MicroserviceEShopProject.BasketAPI/Dockerfile
+
 volumes:
   postgres_catalog:
+  postgres_basket:
+
 
