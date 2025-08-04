@@ -65,4 +65,6 @@ app.UseHealthChecks("/health",
     }
     );
 
+app.UseHttpsRedirection();
+
 app.Run();
