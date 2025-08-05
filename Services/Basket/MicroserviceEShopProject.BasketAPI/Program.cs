@@ -1,4 +1,5 @@
 using MicroserviceEShopProject.BuildingBlocks.Exceptions.Handler;
+using MicroserviceEShopProject.Discount.Grpc.Protos;
 using Microsoft.AspNetCore.Http.Features;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -29,6 +30,12 @@ builder.Services.AddStackExchangeRedisCache(opt =>
 {
     opt.Configuration = builder.Configuration.GetConnectionString("Redis");
     //opt.InstanceName = "Basket";
+});
+
+// Grpc Services
+builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(opt =>
+{
+    opt.Address = new Uri(builder.Configuration["GrpcSettings:DiscountUrl"]!);
 });
 
 #region ExceptionHandling

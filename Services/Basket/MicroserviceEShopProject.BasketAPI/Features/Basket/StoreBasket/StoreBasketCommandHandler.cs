@@ -1,9 +1,12 @@
-﻿namespace MicroserviceEShopProject.BasketAPI.Features.Basket.StoreBasket
+﻿using JasperFx.Events.Daemon;
+using MicroserviceEShopProject.Discount.Grpc.Protos;
+
+namespace MicroserviceEShopProject.BasketAPI.Features.Basket.StoreBasket
 {
     public record StoreBasketCommand(ShoppingCart Cart) : ICommand<StoreBasketResult>;
-    public record StoreBasketResult(string  UserName);
+    public record StoreBasketResult(string UserName);
 
-    public class StoreBasketCommandValidator: AbstractValidator<StoreBasketCommand>
+    public class StoreBasketCommandValidator : AbstractValidator<StoreBasketCommand>
     {
         public StoreBasketCommandValidator()
         {
@@ -12,17 +15,27 @@
         }
     }
 
-    internal sealed class StoreBasketCommandHandler(IBasketRepository basketRepository) : ICommandHandler<StoreBasketCommand, StoreBasketResult>
+    internal sealed class StoreBasketCommandHandler(IBasketRepository basketRepository, DiscountProtoService.DiscountProtoServiceClient discountProtoServiceClient)
+        : ICommandHandler<StoreBasketCommand, StoreBasketResult>
     {
         public async Task<StoreBasketResult> Handle(StoreBasketCommand command, CancellationToken cancellationToken)
         {
-            ShoppingCart cart = command.Cart;
+            await DeductDiscount(command.Cart, cancellationToken);
 
-            await basketRepository.StoreBasket(cart, cancellationToken);
-
-
+            await basketRepository.StoreBasket(command.Cart, cancellationToken);
 
             return new StoreBasketResult(command.Cart.UserName);
+        }
+
+        private async Task DeductDiscount(ShoppingCart shoppingCart, CancellationToken cancellationToken)
+        {
+            foreach (var item in shoppingCart.Items)
+            {
+                var coupon = await discountProtoServiceClient
+                    .GetDiscountAsync(new GetDiscountRequest { ProductName = item.ProductName }, cancellationToken: cancellationToken);
+
+                item.Price -= coupon.Amount;
+            }
         }
     }
 }
