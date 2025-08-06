@@ -8,6 +8,9 @@ services:
   distributedcache:
     image: redis
 
+  orderdb:
+    image: mcr.microsoft.com/mssql/server
+
   microserviceeshopproject.catalogapi:
     image: ${DOCKER_REGISTRY-}microserviceeshopprojectcatalogapi
     build:

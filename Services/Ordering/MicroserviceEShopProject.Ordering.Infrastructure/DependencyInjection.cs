@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using MicroserviceEShopProject.Ordering.Application.Data;
+using Microsoft.EntityFrameworkCore.Diagnostics;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace MicroserviceEShopProject.Ordering.Infrastructure
@@ -9,8 +11,16 @@ namespace MicroserviceEShopProject.Ordering.Infrastructure
         {
             var conString = configuration.GetConnectionString("Database");
 
-            services.AddDbContext<AppDbContext>(opt =>
-                opt.UseSqlServer(conString));
+            services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor>();
+            services.AddScoped<ISaveChangesInterceptor, DispatchDomainEventsInterceptor>();
+
+            services.AddDbContext<AppDbContext>((sp, opt) =>
+            {
+                opt.AddInterceptors(sp.GetServices<ISaveChangesInterceptor>());
+                opt.UseSqlServer(conString);
+            });
+
+            services.AddScoped<IAppDbContext, AppDbContext>();
 
             return services;
         }

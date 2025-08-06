@@ -6,7 +6,7 @@
         {
         }
 
-        private Address(string firstName, string lastName, string? emailAddress, string addressLine, string country, decimal state, decimal zipCode)
+        private Address(string firstName, string lastName, string? emailAddress, string addressLine, string country, string state, decimal zipCode)
         {
             FirstName = firstName;
             LastName = lastName;
@@ -22,10 +22,10 @@
         public string? EmailAddress { get; } = default!;
         public string AddressLine { get; } = default!;
         public string Country { get; } = default!;
-        public decimal State { get; } = default!;
+        public string State { get; } = default!;
         public decimal ZipCode { get; } = default!;
 
-        public static Address Of(string firstName, string lastName, string? emailAddress, string addressLine, string country, decimal state, decimal zipCode)
+        public static Address Of(string firstName, string lastName, string? emailAddress, string addressLine, string country, string state, decimal zipCode)
         {
             ArgumentException.ThrowIfNullOrWhiteSpace(emailAddress);
             ArgumentException.ThrowIfNullOrWhiteSpace(addressLine);

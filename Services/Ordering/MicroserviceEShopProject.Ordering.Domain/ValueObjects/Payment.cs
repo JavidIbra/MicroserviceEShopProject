@@ -5,13 +5,13 @@
         protected Payment()
         {
         }
-        private Payment(string? cardName, string cardNumber, string expiration, string cVV, int peymnatMethod)
+        private Payment(string? cardName, string cardNumber, string expiration, string cVV, int peymantMethod)
         {
             CardName = cardName;
             CardNumber = cardNumber;
             Expiration = expiration;
             CVV = cVV;
-            PeymnatMethod = peymnatMethod;
+            PeymnatMethod = peymantMethod;
         }
 
         public string? CardName { get; } = default!;
