@@ -1,7 +1,4 @@
-﻿using MicroserviceEShopProject.Ordering.Domain.Models;
-using Microsoft.EntityFrameworkCore;
-
-namespace MicroserviceEShopProject.Ordering.Application.Data
+﻿namespace MicroserviceEShopProject.Ordering.Application.Data
 {
     public interface IAppDbContext
     {
