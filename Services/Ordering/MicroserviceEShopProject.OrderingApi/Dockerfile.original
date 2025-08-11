@@ -13,11 +13,6 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["Services/Ordering/MicroserviceEShopProject.OrderingApi/MicroserviceEShopProject.OrderingApi.csproj", "Services/Ordering/MicroserviceEShopProject.OrderingApi/"]
-COPY ["Services/Ordering/MicroserviceEShopProject.Ordering.Application/MicroserviceEShopProject.Ordering.Application.csproj", "Services/Ordering/MicroserviceEShopProject.Ordering.Application/"]
-COPY ["BuildingBlocks/MicroserviceEShopProject.BuildingBlocks.Messaging/MicroserviceEShopProject.BuildingBlocks.Messaging.csproj", "BuildingBlocks/MicroserviceEShopProject.BuildingBlocks.Messaging/"]
-COPY ["BuildingBlocks/MicroserviceEShopProject.BuildingBlocks/MicroserviceEShopProject.BuildingBlocks.csproj", "BuildingBlocks/MicroserviceEShopProject.BuildingBlocks/"]
-COPY ["Services/Ordering/MicroserviceEShopProject.Ordering.Domain/MicroserviceEShopProject.Ordering.Domain.csproj", "Services/Ordering/MicroserviceEShopProject.Ordering.Domain/"]
-COPY ["Services/Ordering/MicroserviceEShopProject.Ordering.Infrastructure/MicroserviceEShopProject.Ordering.Infrastructure.csproj", "Services/Ordering/MicroserviceEShopProject.Ordering.Infrastructure/"]
 RUN dotnet restore "./Services/Ordering/MicroserviceEShopProject.OrderingApi/MicroserviceEShopProject.OrderingApi.csproj"
 COPY . .
 WORKDIR "/src/Services/Ordering/MicroserviceEShopProject.OrderingApi"

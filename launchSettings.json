@@ -5,7 +5,8 @@
       "commandVersion": "1.0",
       "serviceActions": {
         "microserviceeshopproject.catalogapi": "StartDebugging",
-        "microserviceeshopproject.basketapi": "StartDebugging"
+        "microserviceeshopproject.basketapi": "StartDebugging",
+        "microserviceeshopproject.orderingapi": "StartDebugging"
       }
     }
   }

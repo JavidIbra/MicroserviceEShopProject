@@ -1,5 +1,4 @@
-﻿using JasperFx.Events.Daemon;
-using MicroserviceEShopProject.Discount.Grpc.Protos;
+﻿using MicroserviceEShopProject.Discount.Grpc.Protos;
 
 namespace MicroserviceEShopProject.BasketAPI.Features.Basket.StoreBasket
 {

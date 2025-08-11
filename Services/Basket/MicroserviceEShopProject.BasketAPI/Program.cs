@@ -1,4 +1,5 @@
 using MicroserviceEShopProject.BuildingBlocks.Exceptions.Handler;
+using MicroserviceEShopProject.BuildingBlocks.Messaging.MassTransit;
 using MicroserviceEShopProject.Discount.Grpc.Protos;
 using Microsoft.AspNetCore.Http.Features;
 
@@ -38,6 +39,10 @@ builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(
     opt.Address = new Uri(builder.Configuration["GrpcSettings:DiscountUrl"]!);
 });
 
+// Async communication Services
+builder.Services.AddMessageBroker(builder.Configuration);
+
+// Cross-Cutting Services
 #region ExceptionHandling
 builder.Services.AddExceptionHandler<ProblemExceptionHandler>();
 builder.Services.AddProblemDetails(opt =>

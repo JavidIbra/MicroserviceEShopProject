@@ -1,4 +1,4 @@
-﻿namespace MicroserviceEShopProject.Ordering.Application.Order.EventHandlers
+﻿namespace MicroserviceEShopProject.Ordering.Application.Order.EventHandlers.Domain
 {
     public class OrderUpdatedEventHandler(ILogger<OrderUpdatedEventHandler> logger)
         : INotificationHandler<OrderUpdatedEvent>

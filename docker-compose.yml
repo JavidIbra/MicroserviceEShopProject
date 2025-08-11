@@ -11,6 +11,9 @@ services:
   orderdb:
     image: mcr.microsoft.com/mssql/server
 
+  messagebroker:
+    image: rabbitmq:management
+
   microserviceeshopproject.catalogapi:
     image: ${DOCKER_REGISTRY-}microserviceeshopprojectcatalogapi
     build:
@@ -29,9 +32,16 @@ services:
       context: .
       dockerfile: Services/Discount/MicroserviceEShopProject.Discount.Grpc/Dockerfile
 
+  microserviceeshopproject.orderingapi:
+    image: ${DOCKER_REGISTRY-}microserviceeshopprojectorderingapi
+    build:
+      context: .
+      dockerfile: Services/Ordering/MicroserviceEShopProject.OrderingApi/Dockerfile
+
 volumes:
   postgres_catalog:
   postgres_basket:
+
 
 
 
