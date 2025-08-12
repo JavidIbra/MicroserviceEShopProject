@@ -116,7 +116,6 @@ services:
       - MessageBroker__UserName=guest
       - MessageBroker__Password=guest
       - FeatureManagement__OrderFullfilment=false
-    
     depends_on:
       - orderdb
       - messagebroker
