@@ -6,7 +6,9 @@
       "serviceActions": {
         "microserviceeshopproject.catalogapi": "StartDebugging",
         "microserviceeshopproject.basketapi": "StartDebugging",
-        "microserviceeshopproject.orderingapi": "StartDebugging"
+        "microserviceeshopproject.orderingapi": "StartDebugging",
+        "microserviceeshopproject.yarpapigateway": "StartDebugging",
+        "microserviceeshopproject.web": "StartDebugging"
       }
     }
   }

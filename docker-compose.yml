@@ -38,9 +38,23 @@ services:
       context: .
       dockerfile: Services/Ordering/MicroserviceEShopProject.OrderingApi/Dockerfile
 
+  microserviceeshopproject.yarpapigateway:
+    image: ${DOCKER_REGISTRY-}microserviceeshopprojectyarpapigateway
+    build:
+      context: ApiGateways/MicroserviceEShopProject.YarpApiGateway
+      dockerfile: Dockerfile
+
+  microserviceeshopproject.web:
+    image: ${DOCKER_REGISTRY-}microserviceeshopprojectweb
+    build:
+      context: WebApps/MicroserviceEShopProject.Web
+      dockerfile: Dockerfile
+
 volumes:
   postgres_catalog:
   postgres_basket:
+
+
 
 
 

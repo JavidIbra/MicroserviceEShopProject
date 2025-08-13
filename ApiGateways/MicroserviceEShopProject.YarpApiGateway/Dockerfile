@@ -12,10 +12,10 @@ EXPOSE 8081
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
-COPY ["ApiGateways/MicroserviceEShopProject.YarpApiGateway/MicroserviceEShopProject.YarpApiGateway.csproj", "ApiGateways/MicroserviceEShopProject.YarpApiGateway/"]
-RUN dotnet restore "./ApiGateways/MicroserviceEShopProject.YarpApiGateway/MicroserviceEShopProject.YarpApiGateway.csproj"
+COPY ["MicroserviceEShopProject.YarpApiGateway.csproj", "."]
+RUN dotnet restore "./MicroserviceEShopProject.YarpApiGateway.csproj"
 COPY . .
-WORKDIR "/src/ApiGateways/MicroserviceEShopProject.YarpApiGateway"
+WORKDIR "/src/."
 RUN dotnet build "./MicroserviceEShopProject.YarpApiGateway.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
 # This stage is used to publish the service project to be copied to the final stage
